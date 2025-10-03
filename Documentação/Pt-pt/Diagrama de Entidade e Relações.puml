@@ -1,0 +1,100 @@
+@startuml
+entity Patient {
+  * PatientID
+  Identifier_NationalID
+  Name_Family
+  Name_Given
+}
+
+entity Practitioner {
+  * PractitionerID
+  Name_Full
+}
+
+entity ServiceRequest {
+  * RequestID
+  PatientID
+  FacilityID
+  RequestingPractitionerID
+  LIMSCode
+  PanelCode
+}
+
+entity Specimen {
+  * SpecimenID
+  SourceCode
+  SiteCode
+}
+
+entity Observation {
+  * ObservationID
+  RequestID
+  LOINCCode
+  Value
+}
+
+entity DiagnosticReport {
+  * ReportID
+  RequestID
+  Summary
+}
+
+entity LIMSSystem {
+  * LIMSCode
+  Name
+  Developer
+}
+
+entity Facility {
+  * FacilityID
+  Name
+}
+
+entity Laboratory {
+  * LabID
+  FacilityID
+  Name
+}
+
+entity Analyzer {
+  * AnalyzerID
+  Manufacturer
+  Model
+}
+
+entity AnalyzerCapacity {
+  * CapacityID
+  AnalyzerID
+  CapacityPerDay
+}
+
+entity CodeDictionary {
+  * CodeSystem
+  * Code
+  DisplayName
+}
+
+entity PanelDictionary {
+  * PanelCode
+  PanelName
+}
+
+entity ObservationDictionary {
+  * ObservationCode
+  LOINCCode
+  Units
+}
+
+Patient ||--o{ ServiceRequest : "has"
+Practitioner ||--o{ ServiceRequest : "requests"
+ServiceRequest ||--o{ Specimen : "uses"
+ServiceRequest ||--o{ Observation : "produces"
+ServiceRequest ||--o{ DiagnosticReport : "summarized in"
+ServiceRequest }o--|| LIMSSystem : "originated from"
+Facility ||--o{ Laboratory : "hosts"
+Laboratory ||--o{ Analyzer : "uses"
+Analyzer ||--o{ AnalyzerCapacity : "capacity"
+Observation }o--|| ObservationDictionary : "coded by"
+ServiceRequest }o--|| PanelDictionary : "panel"
+ServiceRequest }o--|| Facility : "performed at"
+@enduml
