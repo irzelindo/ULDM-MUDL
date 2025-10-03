@@ -1,1 +1,16 @@
+# Ignore all zip files in the repository
+# This helps to keep the repository clean from large binary files
+# and ensures that only relevant source files are tracked.
+# You can modify this pattern to include/exclude specific zip files as needed.
+*.tar.gz
+*.rar
+*.7z
+*.exe
+*.dll
+*.bin
+*.iso
+*.log
+*.tmp
 *.zip
+./*.zip
+# End of .gitignore
